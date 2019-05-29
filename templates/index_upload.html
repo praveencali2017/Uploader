@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+        <div class="form-group">
+            <form action="{{ url_for('upload_file') }}" method="POST" id="file_form" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-12">
+                        <input type="file" class="form-control-file" id="file" name="file" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="form-group">
+            <form action="{{url_for('search_key')}}" method="GET" id="search_form">
+                <div class="row">
+                    <div class="col-12">
+                        <input type="text" class="form-control" id="key_txt" name="key_txt" placeholder="Search your data">
+                    </div>
+                </div>
+                <div class="row  mt-2 justify-content-center">
+                    <div class="col-4 text-center">
+                        <button class="btn-primary btn-lg" type="submit" id="search"> Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!--Search Result-->
+        <div class="container">
+            {% if request.path=='/search' %}
+                {% if result and result|length >=1 %}
+                    <h2> Found :</h2>
+                    <ul class="list-group">
+                            {% for value in result%}
+                                 <li class="list-group-item">{{value}}</li>
+                            {% endfor %}
+                    </ul>
+                {% else %}
+                    <h2> No Match!!!</h2>
+                {% endif %}
+            {% endif %}
+        </div>
+</div>
+
+{% endblock %}
